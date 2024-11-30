@@ -20,6 +20,7 @@
       <button type="submit">Создать</button>
     </form>
     <script>
+      
         function deletePosts(i) {
           if (confirm("Вы хотите удалить пост?")) {
             inputs.splice(i, 1);
@@ -27,7 +28,7 @@
             renderPosts();
           }
         }
-        
+
         function renderPosts(){
           posts.innerHTML = '';
           for (let i = 0; i < inputs.length; i++) {
