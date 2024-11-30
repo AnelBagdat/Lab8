@@ -40,6 +40,7 @@
             posts.appendChild(postDiv);
           }
         }
+        
         const inputs = JSON.parse(localStorage.getItem('travelDiary')) || [];
         const forma = document.getElementById('forma');
         const posts = document.getElementById('posts');
@@ -53,7 +54,7 @@
           }
           selectcountry.innerHTML = options;
         });
-        
+
         forma.addEventListener('submit', function(event) {
           event.preventDefault();
           const country = document.getElementById('country').value;
