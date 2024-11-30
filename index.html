@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div id="posts"></div>
+    <form id="forma">
+      <label for="country">Страна:</label>
+      <select id="country" name="country"></select>
+  
+      <label for="date">Дата:</label>
+      <input type="date" id="date" name="date">
+    
+      <label for="message">Сообщение:</label>
+      <textarea id="message" name="message"></textarea>
+      <button type="submit">Создать</button>
+    </form>
+    <script>
+        function deletePosts(i) {
+          if (confirm("Вы хотите удалить пост?")) {
+            inputs.splice(i, 1);
+            localStorage.setItem('travelDiary', JSON.stringify(inputs));
+            renderPosts();
+          }
+        }
+        function renderPosts(){
+          posts.innerHTML = '';
+          for (let i = 0; i < inputs.length; i++) {
+            const post = inputs[i]; 
+            const postDiv = document.createElement('div');
+            postDiv.innerHTML = `
+              <h3>${post.country} (${post.date})</h3>
+              <p>${post.message}</p>
+              <button onclick="deletePosts(${i})">Удалить</button>
+            `;
+            posts.appendChild(postDiv);
+          }
+        }
+        const inputs = JSON.parse(localStorage.getItem('travelDiary')) || [];
+        const forma = document.getElementById('forma');
+        const posts = document.getElementById('posts');
+        const selectcountry = document.getElementById('country');
+        fetch('https://restcountries.com/v3.1/all')
+        .then(response => response.json())
+        .then(countries => {
+          let options = '';
+          for (let i = 0; i < countries.length; i++) {
+            options += `<option>${countries[i].name.common}</option>`;
+          }
+          selectcountry.innerHTML = options;
+        });
+        forma.addEventListener('submit', function(event) {
+          event.preventDefault();
+          const country = document.getElementById('country').value;
+          const date = document.getElementById('date').value;
+          const message = document.getElementById('message').value;
+          const newInput = { country, date, message };
+          inputs.push(newInput);
+          localStorage.setItem('travelDiary', JSON.stringify(inputs));
+          renderPosts();
+          forma.reset();
+        });
+        
+    </script>
+</body>
+</html>
