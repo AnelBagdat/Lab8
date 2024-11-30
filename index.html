@@ -27,6 +27,7 @@
             renderPosts();
           }
         }
+        
         function renderPosts(){
           posts.innerHTML = '';
           for (let i = 0; i < inputs.length; i++) {
@@ -40,7 +41,7 @@
             posts.appendChild(postDiv);
           }
         }
-        
+
         const inputs = JSON.parse(localStorage.getItem('travelDiary')) || [];
         const forma = document.getElementById('forma');
         const posts = document.getElementById('posts');
